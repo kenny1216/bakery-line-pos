@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>預訂麵包</title>
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/order.css">
+</head>
+<body>
+<header class="shop-head">
+  <div class="shop-name" id="shop-name">預訂麵包</div>
+  <div class="shop-sub">線上預訂．到店付現</div>
+  <div class="tabs shop-tabs" role="tablist">
+    <button type="button" class="active" data-view="shop">預訂</button>
+    <button type="button" data-view="mine">我的訂單</button>
+  </div>
+</header>
+
+<div class="mock-bar" id="mock-bar" hidden>
+  <b>測試模式</b>（尚未設定 LIFF）．測試 LINE ID
+  <input id="mock-id" autocomplete="off" aria-label="測試 LINE ID">
+  <button type="button" id="mock-switch">切換</button>
+</div>
+
+<main class="shop" id="view-loading"><p class="empty">載入中…</p></main>
+
+<main class="shop" id="view-shop" hidden>
+  <p class="notice small">請先<b>加入官方帳號好友</b>，才能收到訂單確認、電子收據與取貨提醒。</p>
+
+  <section>
+    <h2 class="sh">1．選擇麵包</h2>
+    <div class="menu" id="menu"></div>
+  </section>
+
+  <section>
+    <h2 class="sh">2．取貨日期與時段</h2>
+    <div class="chips" id="dates"></div>
+    <div class="chips wrap" id="slots"></div>
+  </section>
+
+  <section>
+    <h2 class="sh">3．聯絡資料</h2>
+    <div class="stack">
+      <label class="field"><span>姓名</span><input class="input" id="name" autocomplete="name" maxlength="30"></label>
+      <label class="field"><span>手機</span><input class="input" id="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="0912345678"></label>
+      <label class="field"><span>備註（選填）</span><input class="input" id="note" maxlength="200" placeholder="例如：請幫我切片"></label>
+    </div>
+  </section>
+
+  <p class="muted small pay-note">送出後訂單為「待店家確認」，確認後會以 LINE 通知。<br>付款方式：到店取貨時付現。實際供應以店家確認為準。</p>
+</main>
+
+<main class="shop" id="view-done" hidden></main>
+<main class="shop" id="view-mine" hidden></main>
+
+<div class="checkout-bar" id="checkout-bar" hidden>
+  <div class="grow"><div class="small muted" id="bar-info">尚未選擇商品</div><div class="bar-total num" id="bar-total">$0</div></div>
+  <button type="button" class="btn btn-primary btn-lg" id="submit" disabled>確認訂單</button>
+</div>
+
+<script type="module" src="/js/order.js"></script>
+</body>
+</html>

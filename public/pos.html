@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>收銀 POS｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<link rel="stylesheet" href="/css/pos.css">
+</head>
+<body class="pos-body">
+<div class="pos">
+  <section class="pos-main">
+    <div class="pos-toolbar">
+      <div class="tabs" role="tablist">
+        <button type="button" class="active" data-tab="products" role="tab">門市商品</button>
+        <button type="button" data-tab="orders" role="tab">今日預訂取貨<span class="count" id="order-count"></span></button>
+      </div>
+    </div>
+    <div id="tab-products">
+      <div class="product-grid" id="product-grid"></div>
+    </div>
+    <div id="tab-orders" hidden>
+      <input class="input" id="order-search" placeholder="搜尋姓名、電話末碼或訂單編號" autocomplete="off" style="margin-bottom:12px">
+      <div id="order-list" class="order-pick-list"></div>
+    </div>
+  </section>
+
+  <aside class="pos-cart" id="cart" aria-label="購物清單">
+    <button type="button" class="cart-bar" id="cart-bar">
+      <span><b id="bar-qty">0</b> 件</span>
+      <span class="bar-total num" id="bar-total">$0</span>
+      <span class="bar-go">結帳 ▲</span>
+    </button>
+    <div class="cart-inner">
+      <div class="cart-head">
+        <h2>購物清單</h2>
+        <button type="button" class="btn btn-sm btn-ghost mobile-only" id="cart-collapse">收合 ▼</button>
+        <button type="button" class="btn btn-sm btn-danger" id="cart-clear">清空</button>
+      </div>
+      <div id="order-banner" class="order-banner" hidden></div>
+      <ul class="cart-items" id="cart-items"></ul>
+      <div class="pay">
+        <div class="pay-row due"><span>應收</span><b class="num" id="due">$0</b></div>
+        <label class="pay-row">
+          <span>實收現金</span>
+          <input class="input cash-input num" id="cash" inputmode="numeric" autocomplete="off" placeholder="0">
+        </label>
+        <div class="quick-cash" id="quick-cash">
+          <button type="button" class="btn" data-cash="exact">剛好</button>
+          <button type="button" class="btn" data-cash="100">$100</button>
+          <button type="button" class="btn" data-cash="500">$500</button>
+          <button type="button" class="btn" data-cash="1000">$1000</button>
+        </div>
+        <div class="keypad" id="keypad">
+          <button type="button">1</button><button type="button">2</button><button type="button">3</button>
+          <button type="button">4</button><button type="button">5</button><button type="button">6</button>
+          <button type="button">7</button><button type="button">8</button><button type="button">9</button>
+          <button type="button">00</button><button type="button">0</button><button type="button" data-key="back" aria-label="刪除">⌫</button>
+        </div>
+        <div class="pay-row change"><span>找零</span><b class="num" id="change">—</b></div>
+        <button type="button" class="btn btn-green btn-lg btn-block" id="checkout" disabled>完成交易</button>
+      </div>
+    </div>
+  </aside>
+</div>
+<script type="module" src="/js/pos.js"></script>
+</body>
+</html>

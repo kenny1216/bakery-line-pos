@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>每日報表｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+  .print-title { display: none; }
+  @media print { .print-title { display: block; margin: 0 0 12px; } }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page-head">
+    <h1>每日銷售報表</h1>
+    <div class="date-nav no-print">
+      <button class="btn btn-sm" id="prev" aria-label="前一天">‹</button>
+      <input class="input" type="date" id="date">
+      <button class="btn btn-sm" id="next" aria-label="後一天">›</button>
+      <button class="btn btn-sm" id="today">今天</button>
+    </div>
+    <div class="row no-print">
+      <a class="btn btn-sm" id="csv" href="#">下載 CSV</a>
+      <button class="btn btn-sm" id="print">列印</button>
+    </div>
+  </div>
+  <h2 class="print-title" id="print-title"></h2>
+  <div id="report"></div>
+</main>
+<script type="module" src="/js/reports.js"></script>
+</body>
+</html>

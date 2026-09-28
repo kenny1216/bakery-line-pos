@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登入｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  body { min-height: 100dvh; display: grid; place-items: center; padding: 16px; }
+  .login { width: min(380px, 100%); padding: 28px 24px; }
+  .login h1 { margin: 0 0 4px; font-size: 24px; }
+  .login .logo { width: 56px; height: 56px; border-radius: 16px; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-size: 28px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<form class="card login stack" id="form">
+  <div class="logo" aria-hidden="true">🥐</div>
+  <div>
+    <h1>店員登入</h1>
+    <p class="muted small" style="margin:0">收銀 POS 與訂單後台</p>
+  </div>
+  <label class="field"><span>帳號</span><input class="input" name="username" autocomplete="username" required autofocus></label>
+  <label class="field"><span>密碼</span><input class="input" name="password" type="password" autocomplete="current-password" required></label>
+  <p class="notice red" id="err" hidden></p>
+  <button class="btn btn-primary btn-lg btn-block" type="submit">登入</button>
+</form>
+<script type="module">
+  import { api } from '/js/common.js';
+  const form = document.getElementById('form');
+  const err = document.getElementById('err');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    err.hidden = true;
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+    try {
+      await api('/api/login', { method: 'POST', body: { username: form.username.value, password: form.password.value } });
+      const next = new URLSearchParams(location.search).get('next');
+      location.href = next && next.startsWith('/') && !next.startsWith('//') ? next : '/pos.html';
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.hidden = false;
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

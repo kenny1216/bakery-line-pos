@@ -1,0 +1,20 @@
+{
+  "name": "bakery-line-pos",
+  "version": "1.0.0",
+  "description": "烘培麵包 POS 與 LINE 接單系統（第一版）",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8"
+  }
+}

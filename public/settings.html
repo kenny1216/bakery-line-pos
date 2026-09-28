@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>設定｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .settings { display: grid; gap: 16px; }
+  .settings h2 { margin: 0 0 4px; font-size: 18px; }
+  .settings .desc { margin: 0 0 14px; }
+  .msg-text { white-space: pre-wrap; font-size: 13px; max-width: 420px; }
+  code { background: var(--surface-2); padding: 1px 6px; border-radius: 6px; font-size: 13px; word-break: break-all; }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page-head"><h1>設定</h1></div>
+  <div class="settings">
+    <form class="card card-pad" id="store-form">
+      <h2>店家與收據抬頭</h2>
+      <p class="desc muted small">會顯示在客戶收到的電子收據上。</p>
+      <div class="form-grid">
+        <label class="field"><span>店名</span><input class="input" name="store_name" required></label>
+        <label class="field"><span>電話</span><input class="input" name="store_phone"></label>
+        <label class="field"><span>地址</span><input class="input" name="store_address"></label>
+        <label class="field"><span>統一編號（無則空白）</span><input class="input" name="store_tax_id"></label>
+      </div>
+      <label class="field" style="margin-top:12px"><span>收據底部說明</span><input class="input" name="receipt_footer"></label>
+      <div class="row" style="margin-top:14px"><button class="btn btn-primary">儲存</button></div>
+    </form>
+
+    <form class="card card-pad" id="pickup-form">
+      <h2>取貨時段與提醒</h2>
+      <p class="desc muted small">客戶在訂購頁選擇的時段。每天到「提醒時間」會對當天已確認、未取貨的訂單發一次 LINE 提醒。</p>
+      <div class="form-grid">
+        <label class="field"><span>取貨時段（一行一個）</span><textarea class="input" name="pickup_slots" rows="4"></textarea></label>
+        <div class="stack">
+          <label class="field"><span>未取貨提醒時間</span><input class="input" type="time" name="reminder_time" required></label>
+          <label class="field"><span>最多可預訂幾天後</span><input class="input" type="number" min="0" max="60" name="max_advance_days" required></label>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn btn-primary">儲存</button>
+        <button class="btn" type="button" id="run-reminders">立即對今天未取貨訂單發提醒</button>
+        <span class="muted small" id="last-reminder"></span>
+      </div>
+      <p class="notice small" id="cron-note" style="margin-top:12px" hidden></p>
+    </form>
+
+    <form class="card card-pad" id="line-form">
+      <h2>LINE 串接</h2>
+      <p class="desc muted small" id="line-mode"></p>
+      <div class="form-grid">
+        <label class="field"><span>Messaging API Channel access token</span><input class="input" name="line_channel_token" autocomplete="off" placeholder="未設定＝模擬模式"></label>
+        <label class="field"><span>LIFF ID</span><input class="input" name="liff_id" autocomplete="off" placeholder="例如 1234567890-AbCdEfGh"></label>
+        <label class="field"><span>LINE Login Channel ID</span><input class="input" name="line_login_channel_id" autocomplete="off" inputmode="numeric"></label>
+        <label class="field"><span>對外網址（收據連結用）</span><input class="input" name="public_base_url" placeholder="https://pos.example.com"></label>
+        <label class="field"><span>客人送出訂單時傳「已收到訂單」</span><select class="input" name="line_notify_received"><option value="1">傳送</option><option value="0">不傳（店家確認時才通知，較省訊息則數）</option></select></label>
+      </div>
+      <p class="muted small" id="env-note" hidden></p>
+      <p class="muted small">Rich Menu「預訂麵包」連結設為 <code id="liff-url"></code></p>
+      <div class="row" style="margin-top:14px"><button class="btn btn-primary">儲存</button></div>
+    </form>
+
+    <section class="card card-pad">
+      <div class="row" style="margin-bottom:8px"><h2 class="grow">帳號</h2><button class="btn btn-sm btn-primary" id="add-user">＋ 新增帳號</button></div>
+      <p class="desc muted small">店員可結帳、處理訂單、查看報表；店主另可管理商品、設定與作廢交易。</p>
+      <div class="table-wrap"><table class="table"><thead><tr><th>帳號</th><th>姓名</th><th>角色</th><th>狀態</th><th></th></tr></thead><tbody id="users"></tbody></table></div>
+    </section>
+
+    <section class="card card-pad">
+      <div class="row" style="margin-bottom:8px"><h2 class="grow">LINE 發送紀錄</h2><button class="btn btn-sm" id="reload-msgs">重新整理</button></div>
+      <p class="desc muted small">最近 200 則。「模擬傳送」表示尚未設定 Channel access token，訊息沒有真的送出。</p>
+      <div class="table-wrap"><table class="table"><thead><tr><th>時間</th><th>類型</th><th>客戶／訂單</th><th>結果</th><th>內容</th></tr></thead><tbody id="msgs"></tbody></table></div>
+    </section>
+  </div>
+</main>
+<script type="module" src="/js/settings.js"></script>
+</body>
+</html>

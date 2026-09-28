@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商品管理｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .plist { display: grid; gap: 10px; }
+  .prow { display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center; padding: 12px 14px; }
+  .prow.paused { opacity: .6; }
+  .prow .info .name { font-weight: 700; font-size: 17px; }
+  .prow .info .price { color: var(--green); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .prow .toggles { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  @media (max-width: 640px) {
+    .prow { grid-template-columns: 60px 1fr; }
+    .prow .toggles { grid-column: 1 / -1; justify-content: space-between; }
+  }
+  .img-pick { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: center; }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page-head">
+    <h1>商品管理</h1>
+    <button class="btn btn-primary" id="add">＋ 新增商品</button>
+  </div>
+  <p class="muted small" style="margin-top:-6px">「開放預訂」關閉時只在門市販售；「暫停販售」開啟時 POS 與 LINE 訂購頁都不會出現。修改後兩邊立即同步。</p>
+  <div class="plist" id="list"></div>
+</main>
+<script type="module" src="/js/products.js"></script>
+</body>
+</html>

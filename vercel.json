@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "regions": ["sin1"],
+  "redirects": [
+    { "source": "/", "destination": "/pos.html", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index?__path=api/$1" },
+    { "source": "/r/(.*)", "destination": "/api/index?__path=r/$1" },
+    { "source": "/uploads/(.*)", "destination": "/api/index?__path=uploads/$1" }
+  ],
+  "crons": [
+    { "path": "/api/cron/reminders", "schedule": "0 9 * * *" }
+  ]
+}

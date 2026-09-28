@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>訂單看板｜烘焙 POS</title>
+<link rel="stylesheet" href="/css/app.css">
+<style>
+  .order-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+  @media (max-width: 400px) { .order-grid { grid-template-columns: 1fr; } }
+  .ocard { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .ocard.is-new { border-color: #e7c98f; box-shadow: 0 0 0 2px var(--amber-soft), var(--shadow); }
+  .ocard .top { display: flex; align-items: flex-start; gap: 8px; }
+  .ocard .who { font-size: 18px; font-weight: 700; }
+  .ocard .who a { color: inherit; font-weight: 500; font-size: 15px; }
+  .ocard .items { margin: 0; padding: 0; list-style: none; font-size: 15px; }
+  .ocard .items li { display: flex; justify-content: space-between; padding: 2px 0; }
+  .ocard .sum { display: flex; justify-content: space-between; font-weight: 700; border-top: 1px dashed var(--line); padding-top: 8px; font-variant-numeric: tabular-nums; }
+  .ocard .note { background: var(--surface-2); padding: 8px 10px; border-radius: 8px; font-size: 14px; }
+  .ocard .msgs { font-size: 13px; color: var(--text-2); display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .ocard .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: auto; }
+  .ocard .actions .btn { flex: 1; }
+  .slot-head { grid-column: 1 / -1; font-weight: 700; color: var(--text-2); margin-top: 8px; font-size: 15px; }
+  .edit-items { display: grid; gap: 8px; }
+  .edit-items .ei { display: grid; grid-template-columns: 1fr 90px; gap: 8px; align-items: center; }
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="page-head">
+    <h1>訂單看板</h1>
+    <div class="date-nav">
+      <button class="btn btn-sm" id="prev" aria-label="前一天">‹</button>
+      <input class="input" type="date" id="date">
+      <button class="btn btn-sm" id="next" aria-label="後一天">›</button>
+      <button class="btn btn-sm" id="today">今天</button>
+    </div>
+  </div>
+  <p class="notice" id="new-alert" hidden></p>
+  <div class="tabs" id="tabs" role="tablist" style="margin-bottom:16px"></div>
+  <div class="order-grid" id="list"></div>
+  <p class="muted small" style="margin-top:24px">每 20 秒自動更新。LINE 通知失敗時請改以電話聯絡客人。</p>
+</main>
+<script type="module" src="/js/orders.js"></script>
+</body>
+</html>
