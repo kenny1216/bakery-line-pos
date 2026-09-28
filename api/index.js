@@ -3,7 +3,14 @@
 import { openDb } from '../lib/db.js';
 import { createApp } from '../lib/app.js';
 
-const handle = createApp(openDb());
+// 第一次請求時才連資料庫；失敗時清掉快取，下次請求重試
+let ready;
+const connect = () => (ready ??= openDb().catch((e) => {
+  ready = undefined;
+  throw e;
+}));
+
+const handle = createApp(connect);
 
 export default function handler(req, res) {
   // rewrite 後原始路徑放在 __path
